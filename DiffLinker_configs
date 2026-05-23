@@ -1,0 +1,80 @@
+python ../../generate_with_protein.py \
+    --fragments Fragments.sdf \
+    --protein Protein.pdb \
+    --output samples \
+    --model models/pockets_difflinker_full_fc_pdb_excluded.ckpt \
+    --linker_size models/zinc_size_gnn.ckpt \
+    --anchors 42,11 \
+    --n_samples 256 \
+    --max_batch_size 4 \
+    --random_seed 1
+
+
+###with linker size:
+python ../generate_with_protein.py \
+    --fragments Fragments.sdf \
+    --protein prepared.pdb \
+    --output samples \
+    --model models/pockets_difflinker_full_given_anchors.ckpt \
+    --linker_size 10 \
+    --anchors 42,11 \
+    --n_samples 256 \
+    --max_batch_size 1 \
+    --random_seed 1
+
+##
+python -W ignore generate_with_protein.py --fragments Fragments.sdf --protein prepared.pdb --model models/'pockets_difflinker_full_fc_pdb_excluded.ckpt?download=1' --linker_size 10 --anchors 42,11 
+
+
+###Pocketed
+python ../generate_with_protein.py     
+    --fragments Fragments.sdf     
+    --protein prepared.pdb     
+    --output samples     
+    --model models/pockets_difflinker_full_given_anchors.ckpt     
+    --linker_size 10     
+    --anchors 42,11     
+    --n_samples 256     
+    --max_batch_size 1     
+    --random_seed 1
+
+
+
+
+#1 Fragments-only mode
+python -W ignore ../generate.py     
+    --fragments Fragments.sdf     
+    --output run_zinc_noanc_nopock_linksiz     
+    --model models/zinc_difflinker.ckpt     
+    --linker_size 6,12     
+    --n_samples 1024
+
+#2 Pocket (no anchor) mode
+python -W ignore ../generate_with_pocket.py     
+    --fragments Fragments.sdf     
+    --pocket prepared_noH.pdb     
+    --output run_noanc_pock2     
+    --model models/pockets_difflinker_full_no_anchors_fc_pdb_excluded.ckpt     
+    --linker_size 6,12     
+    --n_samples 512     
+    --max_batch_size 2     
+    --random_seed 42
+
+#3 Pocket (with anchor) mode
+python -W ignore ../generate_with_protein.py     
+    --fragments Fragments.sdf     
+    --protein prepared_noH.pdb     
+    --output mode1/     
+    --model models/pockets_difflinker_full_given_anchors.ckpt     
+    --linker_size 6,12     
+    --anchors 42,11     
+    --n_samples 1024     
+    --max_batch_size 2     
+    --random_seed 42
+
+
+
+
+
+
+
